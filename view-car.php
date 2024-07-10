@@ -3,7 +3,20 @@
 <?php
 $sql = "SELECT * FROM inventory";
 $result = mysqli_query($conn, $sql) or die("Query Unsuccesfull");
+
+//date format function
+function date_format1($newdateform)
+{
+    if ($newdateform == '0000-00-00') {
+        echo "--";
+    } else {
+        $date = date_create($newdateform);
+        echo  date_format($date, "d-m-Y");
+    };
+}
+
 ?>
+
 <div class="app-wrapper">
 
     <div class="app-content pt-3 p-md-3 p-lg-4">
@@ -87,7 +100,13 @@ $result = mysqli_query($conn, $sql) or die("Query Unsuccesfull");
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+
+                                            <?php while ($row = mysqli_fetch_assoc($result)) {
+
+                                            ?>
+
+
+
                                                 <tr>
                                                     <td class="cell"><?php echo $row['VIN'] ?></td>
                                                     <td class="cell"><span class="truncate"><?php echo $row['YEAR'] ?></span></td>
@@ -96,31 +115,14 @@ $result = mysqli_query($conn, $sql) or die("Query Unsuccesfull");
                                                     <td class="cell"><?php echo $row['Trim'] ?></td>
                                                     <td class="cell"><?php echo $row['Ext_color'] ?></td>
                                                     <td class="cell"><?php echo $row['Int_color'] ?></td>
-                                                    <td class="cell"><?php echo '&#8377;&nbsp;'. $row['Asking_price'] ?></td>
+                                                    <td class="cell"><?php echo '&#8377;&nbsp;' . $row['Asking_price'] ?></td>
                                                     <td class="cell"><?php echo '&#8377;&nbsp;' . $row['Sale_prie'] ?></td>
                                                     <td class="cell"><?php echo '&#8377;&nbsp;' . $row['Purchase_price'] ?></td>
                                                     <td class="cell"><?php echo $row['Mileage'] . '&nbsp;KM' ?></td>
                                                     <td class="cell"><?php echo $row['Transmission']  ?></td>
-                                                    <td class="cell"><?php
-                                                                        if ($row['Purhase_date'] == '0000-00-00') {
-                                                                            echo "--";
-                                                                        } else {
+                                                    <td class="cell"><?php date_format1($row['Purhase_date'])  ?></td>
+                                                    <td class="cell"><?php date_format1($row['Sale_date'])  ?></td>
 
-
-                                                                            $date = date_create($row['Purhase_date']);
-                                                                            echo
-                                                                            date_format($date, "d-m-Y");
-                                                                        } ?></td>
-                                                    <td class="cell"><?php
-                                                                        if ($row['Sale_date'] == '0000-00-00') {
-                                                                            echo "--";
-                                                                        } else {
-
-
-                                                                            $date = date_create($row['Sale_date']);
-                                                                            echo
-                                                                            date_format($date, "d-m-Y");
-                                                                        } ?></td>
                                                     <!-- <td class="cell"><span>17 Oct</span><span class="note">2:16 PM</span></td>
                                                     <td class="cell"><span class="badge bg-success">Paid</span></td> -->
                                                     <!-- <td class="cell">$259.35</td> -->
